@@ -1,4 +1,4 @@
-match (n) detach delete n
+:begin
 create (:Story{Id:0,Title:"I am root",Text:"Root."})
 create (:Tag{Id:"#10th-century"})
 create (:Tag{Id:"#11th-century"})
@@ -304,3 +304,4 @@ create (:Author{Username:"dnarvaez27",AboutWriting:"",Image:"",DOB:""})
 create (:Author{Username:"Merlin",AboutWriting:"",Image:"",DOB:""})
 create (:Author{Username:"mneira011",AboutWriting:"",Image:"",DOB:""})
 create (:Author{Username:"Antidemiurge",AboutWriting:"",Image:"",DOB:""});
+:commit
