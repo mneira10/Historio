@@ -1,24 +1,19 @@
 from flask import Blueprint, request, Response
 from aux import *
 from author import getAuthor
-from tag import tagExists
+from aux import authorExists
 
 story = Blueprint("story", __name__)
 
 
 @story.route('/', methods=['POST'])
+@authorExists
 def createStory():
     incoming = request.json
     story = incoming["story"]
-    author = incoming["author"]["username"]
     tags = set(incoming["tags"])
-    # check if every tag exists and if it doesn't, create it
-    authorExists = query(
-        "match (n:Author) where n.username = $uname return n", {"uname": author})
-
-    if(len(authorExists["results"][0]["data"]) == 0):
-        return Response("The author does not exist", status=400)
-
+    author = incoming["author"]["username"]
+   
     tagDict = {}
     miQuery = "match (a:Author) " +\
               "match (p:Story) " +\
