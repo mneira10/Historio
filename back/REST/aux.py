@@ -1,6 +1,8 @@
 import requests
 import base64
 import json
+from flask import Response, request
+
 
 # authorization header
 headers = {
@@ -30,3 +32,18 @@ def query(theQuery, JSONparam={"": ""}, returnType="graph"):
                       data=json.dumps(req))
 
     return r.json()
+
+
+def authorExists(f):
+
+    def wrapper():
+        incoming = request.json
+        author = incoming["author"]["username"]
+        authorExists = query(
+        "match (n:Author) where n.username = $uname return n", {"uname": author})
+
+        if(len(authorExists["results"][0]["data"]) == 0):
+            return Response("The author does not exist", status=400)
+
+        return f()
+    return wrapper
