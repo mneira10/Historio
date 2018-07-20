@@ -4,14 +4,13 @@ from flask_cors import CORS
 from author import author
 from rating import rating
 from story import story
-from tag import tag
+
 
 app = Flask(__name__)
 
 # module registration
 app.register_blueprint(story, url_prefix='/story')
 app.register_blueprint(author, url_prefix='/author')
-app.register_blueprint(tag, url_prefix='/tag')
 app.register_blueprint(rating, url_prefix='/rating')
 
 # enable port communication
