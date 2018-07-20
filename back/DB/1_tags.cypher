@@ -1,4 +1,4 @@
-:BEGIN
+:begin
 
 CREATE (:Tag {name: '#10th-century'})
 CREATE (:Tag {name: '#11th-century'})
@@ -301,4 +301,4 @@ CREATE (:Tag {name: '#cultural-heritage'})
 CREATE (:Tag {name: '#cultural-studies'})
 CREATE (:Tag {name: '#curation'})
 ;
-:COMMIT
+:commit
