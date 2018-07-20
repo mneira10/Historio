@@ -1,10 +1,4 @@
-:BEGIN
-
-MATCH (n)
-DETACH DELETE n
-
-:COMMIT
-:BEGIN
+:begin
 CREATE CONSTRAINT ON (story:Story) ASSERT exists(story.title)
 CREATE CONSTRAINT ON (story:Story) ASSERT exists(story.text)
 CREATE CONSTRAINT ON (story:Story) ASSERT exists(story.modifiability)
@@ -20,4 +14,4 @@ CREATE CONSTRAINT ON (tag:Tag) ASSERT (tag.name) IS NODE KEY
 
 CREATE INDEX ON :Story (titulo)
 ;
-:COMMIT
+:commit
