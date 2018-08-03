@@ -15,15 +15,15 @@ def createStory():
     author = incoming["author"]["username"]
 
     tagDict = {}
-    miQuery = "match (a:Author) " +\
-              "match (p:Story) " +\
-              "where a.username = $uname and id(p) = $pid " +\
+    miQuery = "match (a:Author) " + \
+              "match (p:Story) " + \
+              "where a.username = $uname and id(p) = $pid " + \
               "create (s :Story $props), (a) -[:Wrote]->(s), (p)<-[:Inherits]-(s) "
 
     for tag in tags:
         miQuery += "merge ({0}:Tag {{ name: ${0}}}) ".format(tag.replace("#", ""))
         tagDict[tag.replace("#", "")] = tag
-        miQuery += "create (s)-[:Is]->("+tag.replace("#", "")+") "
+        miQuery += "create (s)-[:Is]->(" + tag.replace("#", "") + ") "
 
     miQuery += "return s"
     print(miQuery)
@@ -37,7 +37,9 @@ def createStory():
 
 @story.route('/root')
 def getRootId():
-    return Response(json.dumps(query("match (N:Root) return id(N)", returnType="row")["results"][0]["data"][0]["row"][0]), content_type='application/json')
+    return Response(
+        json.dumps(query("match (N:Root) return id(N)", returnType="row")["results"][0]["data"][0]["row"][0]),
+        content_type='application/json')
 
 
 @story.route('/<storyId>')
@@ -53,7 +55,7 @@ def getStory(storyId):
 # story tags
 @story.route('/<id>/tags')
 def getStoryTags(id):
-    if(not id.isdigit()):
+    if (not id.isdigit()):
         return Response("The id is not a number", status=400)
 
     resp = query(
@@ -65,20 +67,20 @@ def getStoryTags(id):
 
 @story.route('/<id>/ratings')
 def getStoryRatings(id):
-    if(not id.isdigit()):
+    if (not id.isdigit()):
         return Response("The id is not a number", status=400)
 
     resp = query("match (s:Story)<-[r:Rating]-(a:Author) where id(s)=$id return r,a", {
-                 "id": int(id)}, returnType="row")
+        "id": int(id)}, returnType="row")
     return Response(json.dumps(resp), content_type='application/json')
 
 
 # story authors
 @story.route('/<id>/authors')
 def getStoryAuthors(id):
-    if(not id.isdigit()):
+    if (not id.isdigit()):
         return Response("The id is not a number", status=400)
 
     resp = query("match (s:Story)-[:Inherits]->(e:Story)  match (a:Author) -[:Wrote]-> (n) where id(s)=$id return a", {
-                 "id": int(id)}, returnType="row")
+        "id": int(id)}, returnType="row")
     return Response(json.dumps(resp), content_type='application/json')
