@@ -26,3 +26,10 @@ def getAuthor(author):
     return Response(json.dumps(resp),content_type='application/json')
 
 
+#author stories
+
+@author.route('/<author>/stories')
+def getAuthorStories(author):
+    resp = query("match (a:Author)-[:Wrote]->(s:Story) where a.username = $uname return s.title, s.date, id(s)",{"uname":author},returnType="row")
+    return Response(json.dumps(resp),content_type='application/json')
+

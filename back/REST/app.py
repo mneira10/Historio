@@ -2,9 +2,9 @@ from flask import Flask
 from flask_cors import CORS
 
 from author import author
+from followers import follower
 from rating import rating
 from story import story
-
 
 app = Flask(__name__)
 
@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.register_blueprint(story, url_prefix='/story')
 app.register_blueprint(author, url_prefix='/author')
 app.register_blueprint(rating, url_prefix='/rating')
+app.register_blueprint(follower, url_prefix='/followers')
 
 # enable port communication
 CORS(app)
