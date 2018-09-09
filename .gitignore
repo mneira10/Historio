@@ -3,3 +3,5 @@
 
 /node_modules
 /build
+./back/xpress/node_modules
+./back/REST/__pycache__
