@@ -29,11 +29,8 @@ function query(theQuery, JSONparam = {
         url: "http://neo4jbig8575.cloudapp.net:7474/db/data/transaction/commit",
         method: "POST",
         headers: headersToSend,
-        // formData: JSON.stringify(config),
         json: config
     }, function (error, response, body) {
-        console.log("va a imprimir");
-        // console.log(response);
         cbk(body);
     });
 

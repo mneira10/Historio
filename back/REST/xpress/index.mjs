@@ -2,15 +2,13 @@
 // "use strict";
 
 import {router as author}  from "./routes/author";
+import {router as story}  from "./routes/story";
 import express from "express";
 
 const app = express();
 
-// app.get("/", (req, res) => res.send("Hello World!"))
-
-// const other = require("./routes/other");
-
-app.use("/", author);
+app.use("/author", author);
+app.use("/story", story);
 
 
 
