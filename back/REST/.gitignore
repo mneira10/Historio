@@ -1,2 +1,4 @@
 /.idea
 *.iml
+
+./xpress/node_modules/
