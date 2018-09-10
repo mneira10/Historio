@@ -5,6 +5,8 @@ import express from "express";
 import {query} from "../dbConnectivity/query.mjs"
 const router = new express.Router();
 
+
+// roo story
 router.get("/root", (req, res) => {
     query("match (N:Root) return id(N)", {
         "": ""
@@ -14,6 +16,7 @@ router.get("/root", (req, res) => {
     });
 });
 
+// all stories
 router.get("/",(req,res)=>{
     query("match (N:Story) return N", {
         "": ""
@@ -22,6 +25,8 @@ router.get("/",(req,res)=>{
         res.json(data);
     });
 })
+
+// get particular story
 
 router.get("/:id",(req,res)=>{
     query("match (N:Story) where id(N) = $sid return N", {
