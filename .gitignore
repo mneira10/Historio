@@ -1,7 +1,7 @@
 /.idea
 *.iml
 
-./back/REST/xpress/node_modules/**/*
+./back/REST/xpress/node_modules/
 /node_modules
 /build
 ./back/REST/__pycache__
