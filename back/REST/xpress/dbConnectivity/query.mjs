@@ -6,7 +6,6 @@ import btoa from 'btoa';
 import request from "request";
 import mongodb from 'mongodb';
 import assert from 'assert';
-
 const MongoClient = mongodb.MongoClient;
 
 // Mongo stuff
@@ -17,11 +16,11 @@ const dbName = 'narrario';
 
 
 
-function mongoQuery(cbk){
-    MongoClient.connect(url, function(err, client) {
+function mongoQuery(cbk) {
+    MongoClient.connect(url, function (err, client) {
         assert.equal(null, err);
-        // console.log("Connected successfully to server");
-      
+        console.log("Connected successfully to server");
+
         const db = client.db(dbName);
         const collection = db.collection('users');
         // collection.find({}).toArray(function(err, docs) {
@@ -30,10 +29,9 @@ function mongoQuery(cbk){
         //     console.log(docs)
         //     cbk(docs);
         //   });
-        cbk(collection);
-
-        client.close();
-      });
+        cbk(collection,client);
+        
+    });
 }
 
 
@@ -75,4 +73,7 @@ function b64EncodeUnicode(str) {
         }));
 }
 
-export {query,mongoQuery};
+export {
+    query,
+    mongoQuery
+};
