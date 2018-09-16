@@ -17,30 +17,48 @@ router.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// all users
-router.get("/", (req, res) => {
-    mongoQuery((collection)=>{
-        // res.send(data);
-        collection.find({}).toArray(function(err, docs) {
+
+router.post("/", (req, res) => {
+    mongoQuery((collection,client) => {
+        collection.find({
+            'username': req.body.username
+        }).toArray(function (err, docs) {
             assert.equal(err, null);
-            res.json(docs);
-          });
+            if (docs.length > 0) {
+                res.send("Sorry, the username already exists.");
+            } else {
+
+                console.log("generating salt...");
+                const psalt = Math.random().toString(36).substring(2, 12);
+                const phash = sha1(req.body.pass + psalt);
+                console.log('inserting user in db...');
+
+                collection.insertMany([{
+                    username: req.body.username,
+                    salt: psalt,
+                    hash: phash
+                }], function (err, result) {
+                    assert.equal(err, null);
+                    assert.equal(1, result.result.n);
+                    assert.equal(1, result.ops.length);
+                    // console.log("Inserted 3 documents into the collection");
+                    console.log("created user");
+                    res.send("User created succesfully");
+                    console.log("closing conection");
+                    client.close();
+                });
+
+
+            }
+        });
     });
-    
 });
 
-router.post("/",(req,res)=>{
-    mongoQuery((collection)=>{
-        collection.find({'username':req.body.username}).toArray(function(err, docs) {
-            assert.equal(err, null);
-            res.json(docs);
-          });
-    });
-});
-
-router.post("/authenticate",(req,res)=>{
-    mongoQuery((collection)=>{
-        collection.find({'username':req.body.username}).toArray(function(err, docs) {
+router.post("/authenticate", (req, res) => {
+    mongoQuery((collection,client) => {
+        collection.find({
+            'username': req.body.username
+        }).toArray(function (err, docs) {
             assert.equal(err, null);
 
             // console.log("Hashed psswd inpyt");
@@ -55,14 +73,15 @@ router.post("/authenticate",(req,res)=>{
             // console.log(sha1(req.body.pass+docs[0].salt));
             // console.log("Hashed psswd db");
             // console.log(docs[0].hash);
-            if(sha1(req.body.pass+docs[0].salt)===docs[0].hash){
+            if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
                 res.send(true);
-            }
-            else{
+            } else {
                 res.send(false);
             }
-            
-          });
+            console.log("closing conection");
+            client.close();
+
+        });
     });
 });
 
