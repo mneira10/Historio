@@ -4,6 +4,37 @@
 
 import btoa from 'btoa';
 import request from "request";
+import mongodb from 'mongodb';
+import assert from 'assert';
+
+const MongoClient = mongodb.MongoClient;
+
+// Mongo stuff
+// Connection URL
+const url = 'mongodb://localhost:27017';
+// Database Name
+const dbName = 'narrario';
+
+
+
+function mongoQuery(cbk){
+    MongoClient.connect(url, function(err, client) {
+        assert.equal(null, err);
+        // console.log("Connected successfully to server");
+      
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+        // collection.find({}).toArray(function(err, docs) {
+        //     assert.equal(err, null);
+        //     console.log("Found the following records");
+        //     console.log(docs)
+        //     cbk(docs);
+        //   });
+        cbk(collection);
+
+        client.close();
+      });
+}
 
 
 let headersToSend = {
@@ -44,4 +75,4 @@ function b64EncodeUnicode(str) {
         }));
 }
 
-export {query};
+export {query,mongoQuery};
