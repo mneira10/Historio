@@ -71,3 +71,14 @@ Run the server:
 yarn start
 ```
 The front-end should now be running on port 3000.
+
+## Authors
+
+[Mauricio Neira](https://mneira10.github.io/ "me") - 201424001
+
+[David Narvaez](https://dnarvaez27.github.io/ "my buddy") - 201516897
+
+
+
+
+
