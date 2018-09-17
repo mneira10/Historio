@@ -1,7 +1,11 @@
 import React from "react";
 
+
 export class StoryFilter extends React.Component {
+
+  
   render() {
+
     return (
       <div id="stories-sidebar">
         <div id="sidebar-filter-container">
@@ -17,8 +21,13 @@ export class StoryFilter extends React.Component {
             <h3>Author</h3>
             <input/>
           </div>
+          <div style={{textAlign:'center'}}>
+            <button onClick={this.props.redirigirCrearHistoria}>Create brand new story!</button>
+          </div>
         </div>
       </div>
+      
+      
     );
   }
 }

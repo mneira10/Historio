@@ -116,7 +116,7 @@ class StoriesList extends React.Component {
     if ( !this.state.loading ) {
       to_render = (
         <div id="full-stories-container">
-          <StoryFilter/>
+          <StoryFilter redirigirCrearHistoria = {this.props.redirigirCrearHistoria}/>
           <div id="stories-container" className="stories-grid overflow-hidden" ref={this.refContainer}>
             {this.stories.map( ( item, index ) => {
               return (
@@ -132,10 +132,12 @@ class StoriesList extends React.Component {
 }
 
 export class Stories extends React.Component{
+ 
+  
   render(){
     return (
       <Switch>
-        <Route exact path="/stories" component={StoriesList}/>
+        <Route exact path="/stories" component={(props)=><StoriesList {...props} redirigirCrearHistoria={this.props.redirigirCrearHistoria} />}  />
         <Route exact path="/stories/:id" component={StoryItem}/>
       </Switch>
     );
