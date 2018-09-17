@@ -1,12 +1,11 @@
-/*jslint devel: true */
-// "use strict";
+"use strict";
 
 import {router as author}  from "./routes/author";
 import {router as story}  from "./routes/story";
 import {router as rating}  from "./routes/rating";
 import {router as user}  from "./routes/user";
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 
 
 const app = express();
