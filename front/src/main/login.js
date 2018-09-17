@@ -22,7 +22,7 @@ class Login extends React.Component {
       birth: new Date(),
       about_writting: ""
     };
-    
+
     this.state = { error: undefined };
     this.errorComp = React.createRef();
     this.loginSignContainer = React.createRef();
@@ -48,10 +48,13 @@ class Login extends React.Component {
       axio.post( backurl + path + "/authenticate", {
         username: this.user.username,
         pass: pass
-      } ).then( () => {
+      } ).then( ( ) => {
         this.props.cookies.set( "historio-session", pass );
         this.props.onLoginSuccess();
-      } );
+      } ).catch( ()=>{
+        this.setState( { error: "User or password invalid" } );
+        this.doError();
+      });
       break;
     }
     }
@@ -72,7 +75,6 @@ class Login extends React.Component {
       this.doError();
       break;
     default:
-      console.log(this.onSignUp);
       if ( !this.onSignUp ) {
         this.loginSignContainer.current.classList.toggle( "show-signup" );
         this.signContainer.current.classList.toggle( "hidden" );
@@ -83,7 +85,7 @@ class Login extends React.Component {
           username: this.user.username,
           pass: sha1( this.user.password ),
           about_writting: this.user.about_writting,
-          birth: dateToString( new Date(this.user.birth )),
+          birth: dateToString( new Date( this.user.birth ) ),
           image: undefined
         };
 
@@ -144,11 +146,11 @@ class Login extends React.Component {
             <div id="signContainer" ref={this.signContainer} className="hidden">
               <div className="form-container">
                 <span>Birthday</span>
-                <input type="date" onChange={(e) => this.user.birth = e.target.value}/>
+                <input type="date" onChange={( e ) => this.user.birth = e.target.value}/>
               </div>
               <div>
                 <h2>About</h2>
-                <textarea onChange={(e) => this.user.about_writting = e.target.value}/>
+                <textarea onChange={( e ) => this.user.about_writting = e.target.value}/>
               </div>
             </div>
           </div>
