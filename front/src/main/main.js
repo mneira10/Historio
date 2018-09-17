@@ -4,6 +4,7 @@ import "./resources/styles/main.css";
 import "./resources/styles/main-banner.css";
 import { Route, Switch } from "react-router-dom/es/";
 import { Stories } from "../story/story";
+import Banner from "./top_bar";
 
 export class Main extends React.Component {
   constructor( props ) {
@@ -27,15 +28,9 @@ export class Main extends React.Component {
   render() {
     let to_render = (
       <div id="main">
-        <div id="banner">
-          <span>Narrar.io</span>
-          <div id="user">
-            <button><i className="fas fa-user"/></button>
-            <button><i className="fas fa-bars"/></button>
-          </div>
-        </div>
+        <Banner {...this.props}/>
         <Switch>
-          <Route path="/main" render={() =>
+          <Route exact path="/main" render={() =>
             <div id="container">
               <div id="stories" className="main-side" onClick={this.redirectTo( "/stories" )}>
                 <div/>
@@ -61,5 +56,6 @@ export class Main extends React.Component {
 }
 
 Main.propTypes = {
-  history: PropTypes.any
+  history: PropTypes.any,
+  signout: PropTypes.func.isRequired
 };

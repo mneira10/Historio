@@ -3,6 +3,8 @@
     height: 30px;
     width: 100%;
     background-color: #212121;
+    position: relative;
+    z-index: 10;
 }
 
 #main > #banner > span {
@@ -15,13 +17,42 @@
     float: right;
 }
 
-#main > #banner > #user > button {
+#main > #banner > #user > .banner-menu-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown {
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    right: 0;
+    visibility: hidden;
+}
+
+#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown.show {
+    visibility: visible;
+}
+
+#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown > button {
+    color: #212121;
+    font-size: 15px;
+    border: 1px solid transparent;
+    padding: 5px 15px;
+}
+
+#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown > button:hover{
+    background-color: #212121;
+    color: white;
+}
+
+#main > #banner > #user button {
     background-color: transparent;
     color: white;
     font-size: 25px;
     padding: 0 5px;
 }
 
-#main > #banner > #user > button:last-child {
+#main > #banner > #user button:last-child {
     padding-right: 20px;
 }

@@ -28,6 +28,7 @@
     padding: 40px;
     border-radius: 30px;
     box-shadow: 0 1px 10px 0 black;
+    transition: all 1s ease-in-out;
 }
 
 #button-container {
@@ -65,8 +66,24 @@
     color: var(--signup-color);
 }
 
+.form-container span,
 #login-container h2 {
     margin: 0 0 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#login-container span {
+    margin-right: 10px;
+}
+
+#login-container textarea {
+    width: calc(100% - 20px);
+    height: 150px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    outline: none;
 }
 
 #login-container input {
@@ -120,4 +137,20 @@
     backface-visibility: hidden;
     perspective: 1000px;
     transform: translate(-50%, 10px);
+}
+
+#login-signup-container {
+    display: grid;
+}
+
+#login-signup-container.show-signup {
+    grid-template-columns: 1fr 1fr;
+}
+
+#signContainer.hidden {
+    display: none !important;
+}
+
+#login-signup-container > div {
+    display: grid;
 }

@@ -4,6 +4,7 @@ import "../main/resources/styles/main.css";
 import "./resources/styles/story.css";
 import "./resources/styles/filter.css";
 import axios from "axios";
+import {backurl} from "../App";
 
 export class Story extends React.Component {
 
@@ -27,7 +28,7 @@ export class Story extends React.Component {
               <div>
                 {this.props.item.tags.map( ( tag, index ) => {
                   return (
-                    <span key={"tag_" + index} className="story-tag">{tag}</span>
+                    <span key={"tag_" + index} className="story-tag">{tag.name}</span>
                   );
                 } )}
               </div>
@@ -56,8 +57,6 @@ Story.propTypes = {
   item: Proptypes.object.isRequired
 };
 
-const backurl = "http://neo4jbig8575.cloudapp.net:8080/story";
-
 export class Stories extends React.Component {
 
   constructor( props ) {
@@ -81,7 +80,7 @@ export class Stories extends React.Component {
       } );
     };
 
-    axios.get( backurl )
+    axios.get( backurl + "/story" )
       .then( ( response ) => {
         parseData( response.data );
         this.setState( { loading: false } );

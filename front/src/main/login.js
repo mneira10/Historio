@@ -4,6 +4,10 @@ import PropTypes, { instanceOf } from "prop-types";
 import axio from "axios";
 import sha1 from "sha1";
 import { Cookies, withCookies } from "react-cookie";
+import { backurl } from "../App";
+import { dateToString } from "../util";
+
+const path = "/user";
 
 class Login extends React.Component {
   constructor( props ) {
@@ -11,16 +15,25 @@ class Login extends React.Component {
     this.login = this.login.bind( this );
     this.signup = this.signup.bind( this );
     this.doError = this.doError.bind( this );
-    this.username = "";
-    this.password = "";
+
+    this.user = {
+      username: "",
+      password: "",
+      birth: new Date(),
+      about_writting: ""
+    };
+    
     this.state = { error: undefined };
     this.errorComp = React.createRef();
+    this.loginSignContainer = React.createRef();
+    this.signContainer = React.createRef();
+    this.onSignUp = false;
 
     this.timeout = NaN;
   }
 
   login() {
-    switch ( Login.validateFields( this.username, this.password ) ) {
+    switch ( Login.validateFields( this.user.username, this.user.password ) ) {
     case 0:
       this.setState( { error: "Username invalid" } );
       this.doError();
@@ -31,23 +44,21 @@ class Login extends React.Component {
       break;
     default: {
       this.setState( { error: undefined } );
-      const pass = sha1( this.password );
-      axio.post( "", {
-        username: this.username,
+      const pass = sha1( this.user.password );
+      axio.post( backurl + path + "/authenticate", {
+        username: this.user.username,
         pass: pass
       } ).then( () => {
         this.props.cookies.set( "historio-session", pass );
         this.props.onLoginSuccess();
       } );
-      this.props.onLoginSuccess();
-
       break;
     }
     }
   }
 
   signup() {
-    switch ( Login.validateFields( this.username, this.password, false ) ) {
+    switch ( Login.validateFields( this.user.username, this.user.password, false ) ) {
     case 0:
       this.setState( { error: "Username invalid" } );
       this.doError();
@@ -61,14 +72,26 @@ class Login extends React.Component {
       this.doError();
       break;
     default:
-      axio.post( "", {
-        username: this.username,
-        pass: sha1( this.password )
-      } ).then( ( ) => {
-        this.setState( { error: undefined } );
-        this.props.onLoginSuccess();
-      } );
-      this.props.onLoginSuccess();
+      console.log(this.onSignUp);
+      if ( !this.onSignUp ) {
+        this.loginSignContainer.current.classList.toggle( "show-signup" );
+        this.signContainer.current.classList.toggle( "hidden" );
+        this.onSignUp = true;
+      }
+      else {
+        let data = {
+          username: this.user.username,
+          pass: sha1( this.user.password ),
+          about_writting: this.user.about_writting,
+          birth: dateToString( new Date(this.user.birth )),
+          image: undefined
+        };
+
+        axio.post( backurl + path, data ).then( () => {
+          this.setState( { error: undefined } );
+          this.props.onLoginSuccess();
+        } );
+      }
       break;
     }
   }
@@ -105,15 +128,29 @@ class Login extends React.Component {
       <div id="welcome-container">
         <h1>Narrar.io</h1>
         <div id="login-container">
-          <div className="form-container">
-            <h2>Username</h2>
-            <input onChange={( e ) => this.username = e.target.value}
-              onKeyUp={( e ) => Login.enterPress( e, this.login )}/>
-          </div>
-          <div className="form-container">
-            <h2>Password</h2>
-            <input onChange={( e ) => this.password = e.target.value}
-              onKeyUp={( e ) => Login.enterPress( e, this.login )} type="password"/>
+          <div id="login-signup-container" ref={this.loginSignContainer}>
+            <div>
+              <div className="form-container">
+                <h2>Username</h2>
+                <input onChange={( e ) => this.user.username = e.target.value}
+                  onKeyUp={( e ) => Login.enterPress( e, this.login )}/>
+              </div>
+              <div className="form-container">
+                <h2>Password</h2>
+                <input onChange={( e ) => this.user.password = e.target.value}
+                  onKeyUp={( e ) => Login.enterPress( e, this.login )} type="password"/>
+              </div>
+            </div>
+            <div id="signContainer" ref={this.signContainer} className="hidden">
+              <div className="form-container">
+                <span>Birthday</span>
+                <input type="date" onChange={(e) => this.user.birth = e.target.value}/>
+              </div>
+              <div>
+                <h2>About</h2>
+                <textarea onChange={(e) => this.user.about_writting = e.target.value}/>
+              </div>
+            </div>
           </div>
           <div id="button-container">
             <button id="login" onClick={this.login}>Login</button>
