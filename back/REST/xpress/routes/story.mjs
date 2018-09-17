@@ -1,5 +1,4 @@
-/*jslint devel: true */
-// "use strict";
+"use strict";
 
 import express from "express";
 import {
