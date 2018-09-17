@@ -17,6 +17,6 @@ app.use("/story", story);
 app.use("/rating", rating);
 app.use("/user", user);
 
+const port = 8080;
 
-
-app.listen(3000, () => console.log("Narrario back listening on port 3000!"));
+app.listen(port, () => console.log("Narrario back listening on port " + port + "!"));

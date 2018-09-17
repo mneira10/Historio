@@ -44,8 +44,12 @@ router.post("/", (req, res) => {
                     // console.log("Inserted 3 documents into the collection");
                     console.log("created user");
                     res.send("User created succesfully");
-                    console.log("closing conection");
+                    console.log("closing conection"); 
                     client.close();
+
+                    //create user in neo4j
+
+
                 });
 
 
@@ -73,9 +77,16 @@ router.post("/authenticate", (req, res) => {
             // console.log(sha1(req.body.pass+docs[0].salt));
             // console.log("Hashed psswd db");
             // console.log(docs[0].hash);
-            if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
+            // console.log("entraaaaaa");
+            // console.log(docs.length);
+            if(docs.length===0){
+                res.status(400);
+                res.send(false);
+            }
+            else if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
                 res.send(true);
             } else {
+                res.status(400);
                 res.send(false);
             }
             console.log("closing conection");
