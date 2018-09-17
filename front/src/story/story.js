@@ -65,11 +65,16 @@ class StoriesList extends React.Component {
 
   constructor( props ) {
     super( props );
+    const tt = () => true;
     this.state = {
-      loading: true
+      loading: true,
+      filters: [ tt, tt, tt, tt, tt ]
     };
     this.stories = [];
     this.refContainer = React.createRef();
+    this.filter = this.filter.bind( this );
+    this.addFilter= this.addFilter.bind(this);
+    this.setFilters = this.setFilters.bind(this);
   }
 
   componentDidMount() {
@@ -107,6 +112,24 @@ class StoriesList extends React.Component {
       } );
   }
 
+  addFilter(i, filter){
+    let temp = this.state.filters;
+    temp[ i ] = filter;
+    this.setState( { filters: temp } );
+  }
+
+  setFilters(filters){
+    this.setState( { filters: filters } );
+  }
+
+  filter( item ) {
+    return this.state.filters.every( ( f ) => {
+      let f1 = f( item );
+      console.log(f1);
+      return f1;
+    } );
+  }
+
   render() {
     let to_render = (
       <div id="stories-container">
@@ -116,9 +139,10 @@ class StoriesList extends React.Component {
     if ( !this.state.loading ) {
       to_render = (
         <div id="full-stories-container">
-          <StoryFilter redirigirCrearHistoria={this.props.redirigirCrearHistoria}/>
+          <StoryFilter setFilters={this.setFilters} redirigirCrearHistoria={this.props.redirigirCrearHistoria}/>
           <div id="stories-container" className="stories-grid overflow-hidden" ref={this.refContainer}>
-            {this.stories.map( ( item, index ) => {
+            {this.stories.filter( this.filter ).map( ( item, index ) => {
+              console.log( item );
               return (
                 <Story key={"story_" + index} item={item} {...this.props}/>
               );

@@ -38,7 +38,7 @@ class StoryItem extends React.Component {
   }
 
   goTo( path ) {
-
+    this.props.history.push( path );
   }
 
   editMode() {
@@ -84,12 +84,16 @@ class StoryItem extends React.Component {
           <div id="story-item-content">
             <div>
               {this.state.edit &&
-              <textarea className="story-text-container" onChange={( e ) => this.storyEdit.text1 = e.target.value}/>}
+              <textarea className="story-text-container"
+                onChange={( e ) => this.storyEdit.text1 = e.target.value}
+                placeholder={"Place your text here"}/>}
               <div className="story-text-container">
                 <span>{this.state.story.story.text}</span>
               </div>
               {this.state.edit &&
-              <textarea className="story-text-container" onChange={( e ) => this.storyEdit.text2 = e.target.value}/>}
+              <textarea className="story-text-container"
+                onChange={( e ) => this.storyEdit.text2 = e.target.value}
+                placeholder={"Place your text here"}/>}
             </div>
             <div id="story-item-author">
               <div id="story-item-author-img"/>
@@ -97,7 +101,9 @@ class StoryItem extends React.Component {
               <div>
                 {this.state.story.tags.map( ( item, index ) =>
                   <span key={"tag_" + index} className="badge">{item.name}</span> )}
-                {this.state.edit && <textarea onChange={( e ) => this.storyEdit.tags = e.target.value}/>}
+                {this.state.edit && <textarea className="tags story-text-container"
+                  onChange={( e ) => this.storyEdit.tags = e.target.value}
+                  placeholder="Add new tags here"/>}
               </div>
               <div>
                 <h3>Rating</h3>
@@ -133,7 +139,8 @@ class StoryItem extends React.Component {
 
 StoryItem.propTypes = {
   match: PropTypes.any,
-  cookies: instanceOf( Cookies ).isRequired
+  cookies: instanceOf( Cookies ).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withCookies( StoryItem );
