@@ -1,5 +1,16 @@
 # Historio
-Collaborative writing app in the style of an [exquisite corpse](https://en.wikipedia.org/wiki/Exquisite_corpse "Check it out on Wikipedia"). 
+Collaborative writing app in the style of an [exquisite corpse](https://en.wikipedia.org/wiki/Exquisite_corpse "Check it out on Wikipedia"). The objective was to enable users to write texts from scratch and to build upon previous made texts with as much freedom as possible. 
+
+## Used technologies
+
+1. [Neo4j](https://neo4j.com/ "main database") as main database
+  - [Cypher](https://reacttraining.com/react-router/ "neo4j query language") the neo4j query language
+2. [Mongodb](https://www.mongodb.com/ "user database") as user database
+3. [Express.js](https://expressjs.com/ "REST API") for the REST API
+4. [React](https://reactjs.org/ "front end js framework") for the front end
+  - [React router](https://reacttraining.com/react-router/ "react router") to route between react pages
+5. [Password salts](https://en.wikipedia.org/wiki/Salt_(cryptography) "salts") for increased security
+6. [Azure](https://azure.microsoft.com/en-us/ "deployment") for cloud deployment 
 
 ## How to run
 ### *Back-end*
