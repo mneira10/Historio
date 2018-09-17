@@ -96,7 +96,13 @@ router.post("/authenticate", (req, res) => {
                 res.send(false);
             }
             else if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
-                res.send(true);
+                const uname = req.body.username;
+                query("match (n:Author) where n.username = $usrname return n", {
+                    usrname: uname
+                }, "row", (data) => {
+                    res.json(data);
+                });
+                
             } else {
                 res.status(400);
                 res.send(false);
