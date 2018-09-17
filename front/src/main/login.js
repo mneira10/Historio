@@ -18,9 +18,9 @@ class Login extends React.Component {
 
     this.user = {
       username: "",
-      password: "",
+      pass: "",
       birth: new Date(),
-      about_writting: ""
+      about_writing: ""
     };
 
     this.state = { error: undefined };
@@ -33,7 +33,7 @@ class Login extends React.Component {
   }
 
   login() {
-    switch ( Login.validateFields( this.user.username, this.user.password ) ) {
+    switch ( Login.validateFields( this.user.username, this.user.pass ) ) {
     case 0:
       this.setState( { error: "Username invalid" } );
       this.doError();
@@ -44,15 +44,18 @@ class Login extends React.Component {
       break;
     default: {
       this.setState( { error: undefined } );
-      const pass = sha1( this.user.password );
+      const pass = sha1( this.user.pass );
       axio.post( backurl + path + "/authenticate", {
         username: this.user.username,
         pass: pass
-      } ).then( ( ) => {
-        this.props.cookies.set( "historio-session", pass );
+      } ).then( ( response ) => {
+        let rta = response.data[ "results" ][ 0 ][ "data" ][ 0 ][ "row" ][ 0 ];
+        rta["pass"] = pass;
+        this.saveSession( rta );
         this.props.onLoginSuccess();
-      } ).catch( ()=>{
-        this.setState( { error: "User or password invalid" } );
+      } ).catch( (e)=>{
+        console.error(e);
+        this.setState( { error: "User or pass invalid" } );
         this.doError();
       });
       break;
@@ -61,7 +64,7 @@ class Login extends React.Component {
   }
 
   signup() {
-    switch ( Login.validateFields( this.user.username, this.user.password, false ) ) {
+    switch ( Login.validateFields( this.user.username, this.user.pass, false ) ) {
     case 0:
       this.setState( { error: "Username invalid" } );
       this.doError();
@@ -71,7 +74,7 @@ class Login extends React.Component {
       this.doError();
       break;
     case 2:
-      this.setState( { error: "Check password requirements" } );
+      this.setState( { error: "Check pass requirements" } );
       this.doError();
       break;
     default:
@@ -83,19 +86,27 @@ class Login extends React.Component {
       else {
         let data = {
           username: this.user.username,
-          pass: sha1( this.user.password ),
-          about_writting: this.user.about_writting,
+          pass: sha1( this.user.pass ),
+          about_writing: this.user.about_writing,
           birth: dateToString( new Date( this.user.birth ) ),
           image: undefined
         };
 
-        axio.post( backurl + path, data ).then( () => {
-          this.setState( { error: undefined } );
-          this.props.onLoginSuccess();
-        } );
+        axio.post( backurl + path, data )
+          .then( () => {
+            this.setState( { error: undefined } );
+            this.saveSession( data );
+            this.props.onLoginSuccess();
+          } );
       }
       break;
     }
+  }
+
+  saveSession( user ) {
+    let now = Date.now();
+    this.props.cookies.set( "historio-session-owner", JSON.stringify( user ), { expires: new Date( now + (1000 * 60 * 60 * 24 * 5) ) } );
+    this.props.cookies.set( "historio-session", user.pass, { expires: new Date( now + (1000 * 60 * 60 * 24 * 5) ) } );
   }
 
   doError() {
@@ -139,7 +150,7 @@ class Login extends React.Component {
               </div>
               <div className="form-container">
                 <h2>Password</h2>
-                <input onChange={( e ) => this.user.password = e.target.value}
+                <input onChange={( e ) => this.user.pass = e.target.value}
                   onKeyUp={( e ) => Login.enterPress( e, this.login )} type="password"/>
               </div>
             </div>
@@ -150,7 +161,7 @@ class Login extends React.Component {
               </div>
               <div>
                 <h2>About</h2>
-                <textarea onChange={( e ) => this.user.about_writting = e.target.value}/>
+                <textarea onChange={( e ) => this.user.about_writing = e.target.value}/>
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@
     padding: 5px;
     right: 0;
     visibility: hidden;
+    box-shadow: 0 1px 10px -3px;
 }
 
 #main > #banner > #user > .banner-menu-dropdown > .banner-dropdown.show {
@@ -41,7 +42,7 @@
     padding: 5px 15px;
 }
 
-#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown > button:hover{
+#main > #banner > #user > .banner-menu-dropdown > .banner-dropdown > button:hover {
     background-color: #212121;
     color: white;
 }

@@ -4,7 +4,8 @@ import "../main/resources/styles/main.css";
 import "./resources/styles/story.css";
 import "./resources/styles/filter.css";
 import axios from "axios";
-import {backurl} from "../App";
+import { backurl } from "../App";
+import { StoryFilter } from "./story-filter";
 
 export class Story extends React.Component {
 
@@ -113,14 +114,7 @@ export class Stories extends React.Component {
     if ( !this.state.loading ) {
       to_render = (
         <div id="full-stories-container">
-          <div id="stories-sidebar">
-            <div>
-              <input/>
-              <div id="sidebar-filter-container">
-
-              </div>
-            </div>
-          </div>
+          <StoryFilter/>
           <div id="stories-container" className="stories-grid overflow-hidden" ref={this.refContainer}>
             {this.stories.map( ( item, index ) => {
               return (

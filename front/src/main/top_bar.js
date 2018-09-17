@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { instanceOf }  from "prop-types";
+import PropTypes, { instanceOf } from "prop-types";
 import { Cookies, withCookies } from "react-cookie";
 
 class Banner extends React.Component {
@@ -8,20 +8,22 @@ class Banner extends React.Component {
     super( props );
     this.userOptHandler = this.userOptHandler.bind( this );
     this.userOpt = React.createRef();
-    this.signOut = this.signOut.bind(this);
-    console.log(props);
+    this.signOut = this.signOut.bind( this );
+    this.onBlur = this.onBlur.bind( this );
   }
 
-  userOptHandler() {
+  userOptHandler( ) {
     this.userOpt.current.classList.toggle( "show" );
+    this.userOpt.current.firstChild.focus();
   }
 
-  static onBlur() {
-    console.log( 123 );
+  onBlur( ) {
+    // this.userOpt.current.classList.toggle( "show" );
   }
 
   signOut() {
     this.props.cookies.remove( "historio-session" );
+    this.props.cookies.remove( "historio-session-owner" );
     this.props.signout();
   }
 
@@ -32,7 +34,7 @@ class Banner extends React.Component {
         <div id="user">
           <div className="banner-menu-dropdown">
             <button onClick={this.userOptHandler}><i className="fas fa-user"/></button>
-            <div className="banner-dropdown" ref={this.userOpt} onBlur={Banner.onBlur}>
+            <div className="banner-dropdown" ref={this.userOpt} onBlur={this.onBlur}>
               <button>Account</button>
               <button>Settings</button>
               <button onClick={this.signOut}>Log out</button>
