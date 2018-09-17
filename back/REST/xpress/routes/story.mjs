@@ -13,8 +13,52 @@ router.use(bodyParser.urlencoded({
     extended: true
 }));
 
+//create story
+// {
+// 	"padre":257,
+// 	"story":{
+// 		"title":"tercero",
+// 		"text":"blabidi blabidi bla",
+// 		"date": "2017-08-23",
+// 		"modifiability":2
+// 	},
+// 	"author":{"username":"mneira011"},
+// 	"tags":["#academic","#fantasy"]
+// }
 
-// roo story
+router.post('/',(req,res)=>{
+    console.log("entra a postear");
+    const tags = req.body.tags;
+    let myQuery = `
+        match (a:Author) 
+        match (p:Story) 
+        where a.username = $uname and id(p) = $pid 
+        create (s :Story $props), (a) -[:Wrote]->(s), (p)<-[:Inherits]-(s) `;
+    const tagQuery = tags.map((x)=>`merge (${x.replace("#","")}:Tag {name: \$${x.replace("#","")}})  create (s)-[:Is]->(${x.replace("#","")}) `).join(" ");
+    let tagDict = {}
+    for(let i of tags){
+        tagDict[i.replace("#","")] = i;
+    }
+
+    tagDict["props"] = req.body.story;
+    tagDict["uname"] = req.body.author.username;
+    tagDict["pid"] = req.body.padre;
+    // console.log(tagDict);
+    // console.log(myQuery);
+    query(myQuery+tagQuery, tagDict, "row", (data) => {
+        console.log("finished");
+        // res.setHeader('Content-Type', 'application/json');
+        
+        res.send("Created story succesfully");
+
+    });
+    
+
+
+});
+
+
+// root story
 router.get("/root", (req, res) => {
     query("match (N:Root) return id(N)", {
         "": ""
@@ -26,7 +70,7 @@ router.get("/root", (req, res) => {
 
 // all stories
 router.get("/", (req, res) => {
-    query("match (N:Story) return N", {
+    query("match (s:Story) match(a:Author) match (t:Tag) where (a)-[:Wrote]->(s) and (s)-[:Is]->(t) return s,a,collect(t)", {
         "": ""
     }, "row", (data) => {
         res.setHeader('Content-Type', 'application/json');
@@ -85,22 +129,7 @@ router.get("/:id/tags", (req, res) => {
 
 // TODO: create story
 
-router.post("/", (req, res) => {
-    const story = req.body.story
-    const tags = req.body.tags
-    const authorUsername = req.body.author.username
 
-    let tagQuery = `match (a:Author) 
-                    match (p:Story) 
-                    where a.username = $uname and id(p) = $pid 
-                    create (s :Story $props), (a) -[:Wrote]->(s), (p)<-[:Inherits]-(s)`
-    //need to create tags if they dont already exist
-    // for(let tag of tags){
-    //     miQuery += "merge ({0}:Tag {{ name: ${0}}}) ".format(tag.replace("#", ""))
-    //     tagDict[tag.replace("#", "")] = tag
-    //     miQuery += "create (s)-[:Is]->(" + tag.replace("#", "") + ") "
-    // }
-});
 
 export {
     router
