@@ -60,6 +60,8 @@ function query(theQuery, JSONparam = {
         headers: headersToSend,
         json: config
     }, function (error, response, body) {
+        // console.log("error: "+error);
+        // console.log("response: ",JSON.stringify(response));
         cbk(body);
     });
 
