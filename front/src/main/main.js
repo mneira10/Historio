@@ -30,7 +30,7 @@ export class Main extends React.Component {
       <div id="main">
         <Banner {...this.props}/>
         <Switch>
-          <Route exact path="/main" render={() =>
+          <Route exact path="/" render={() =>
             <div id="container">
               <div id="stories" className="main-side" onClick={this.redirectTo( "/stories" )}>
                 <div/>

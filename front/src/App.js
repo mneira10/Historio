@@ -35,7 +35,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/login"
               render={() => this.state.logged ?
-                <Redirect to="/main"/> :
+                <Redirect to="/"/> :
                 <Login onLoginSuccess={this.approvedLogin}/>}/>
             <Route path="/"
               render={( props ) => this.state.logged ?
