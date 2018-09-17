@@ -9,6 +9,7 @@ import {
 } from "../dbConnectivity/query.mjs"
 import assert from 'assert';
 import sha1 from 'sha1';
+import request from 'request';
 
 const router = new express.Router();
 
@@ -48,6 +49,16 @@ router.post("/", (req, res) => {
                     client.close();
 
                     //create user in neo4j
+                    // console.log(req.body);
+                    request({
+                        uri: 'http://neo4jbig8575.cloudapp.net:8080/author',
+                        method: 'POST',
+                        json: req.body},
+                        function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                console.log('author added correctly to neo4j') // Print the shortened url.
+                            }
+                        });
 
 
                 });
