@@ -50,6 +50,7 @@ router.post("/", (req, res) => {
 
                     //create user in neo4j
                     // console.log(req.body);
+                    delete req.body.pass;
                     request({
                         uri: 'http://neo4jbig8575.cloudapp.net:8080/author',
                         method: 'POST',
