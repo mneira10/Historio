@@ -3,7 +3,8 @@ Collaborative writing app in the style of an [exquisite corpse](https://en.wikip
 
 ![Screenshot](https://github.com/mneira10/Historio/raw/master/screenhot.png)
 
-**Application is hosted ** [here](http://neo4jbig8575.cloudapp.net)
+**Application is hosted** [here](http://neo4jbig8575.cloudapp.net "deployment link")
+
 ## Used technologies
 
 1. [Neo4j](https://neo4j.com/ "main database") as main database
