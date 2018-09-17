@@ -1,6 +1,9 @@
 # Historio
 Collaborative writing app in the style of an [exquisite corpse](https://en.wikipedia.org/wiki/Exquisite_corpse "Check it out on Wikipedia"). The objective was to enable users to write texts from scratch and to build upon previous made texts with as much freedom as possible. 
 
+![Screenshot](https://github.com/mneira10/Historio/raw/master/screenhot.png)
+
+**Application is hosted ** [here](http://neo4jbig8575.cloudapp.net)
 ## Used technologies
 
 1. [Neo4j](https://neo4j.com/ "main database") as main database
