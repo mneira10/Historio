@@ -1,0 +1,27 @@
+#main > #banner {
+    padding: 10px;
+    height: 30px;
+    width: 100%;
+    background-color: #212121;
+}
+
+#main > #banner > span {
+    font-family: Consolas, monospace;
+    font-size: 25px;
+    color: white;
+}
+
+#main > #banner > #user {
+    float: right;
+}
+
+#main > #banner > #user > button {
+    background-color: transparent;
+    color: white;
+    font-size: 25px;
+    padding: 0 5px;
+}
+
+#main > #banner > #user > button:last-child {
+    padding-right: 20px;
+}

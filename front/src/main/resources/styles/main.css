@@ -9,6 +9,7 @@
     background-color: white;
     border: 1px solid #212121;
     cursor: pointer;
+    outline: none;
 }
 
 #main button:hover {
@@ -16,26 +17,13 @@
     color: white;
 }
 
-#main-account {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    padding: 40px 50px !important;
-    border: 1px solid transparent !important;
-    font-size: 60px;
-}
-
-#main > div {
+#main > #container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 100%;
+    height: calc(100% - 50px);
 }
 
-.main-side {
+#container > .main-side {
     height: 100%;
     text-align: center;
     color: white;
@@ -43,51 +31,35 @@
     transition: all .3s ease-in-out 0s !important;
 }
 
-.main-side > * {
+#container > .main-side > * {
     transition: all .3s ease-in-out 0s !important;
 }
 
-#main > div > #stories {
-    background-color: #455059;
-}
-
-.main-side:hover > * {
+#container > .main-side:hover > * {
     transform: scale(1.5);
     transition: all .5s ease-in-out .5s;
 }
 
-.img-stories {
-    background: url("../imgs/story.png") no-repeat center;
-    background-size: contain;
-}
-
-#main > div > #authors {
-    background-color: #F2D0A7;
-}
-
-.main-side > div {
+#container > .main-side > div {
     height: 25vh;
     margin-top: 30%;
     margin-bottom: 50px;
 }
 
-#main > div > #authors > div {
-    background: url("../imgs/authors.png") no-repeat center;
+#container > #stories {
+    background-color: #455059;
+}
+
+#container > #stories > div {
+    background: url("../imgs/story.png") no-repeat center;
     background-size: contain;
 }
 
-.main-main {
-    height: 100%;
-}
-
-#full-stories-container {
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-}
-
-#stories-sidebar {
+#container > #authors {
     background-color: #F2D0A7;
-    box-shadow: 4px -5px 10px -6px black;
-    z-index: 3;
-    height: calc(100%);
+}
+
+#container > #authors > div {
+    background: url("../imgs/authors.png") no-repeat center;
+    background-size: contain;
 }

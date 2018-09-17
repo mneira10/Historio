@@ -1,8 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './resources/index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./resources/index.css";
+import App from "./App";
+import registerServiceWorker from "./registerServiceWorker";
+import { CookiesProvider } from "react-cookie";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render( (
+  <CookiesProvider>
+    <App/>
+  </CookiesProvider>
+), document.getElementById( "root" ) );
 registerServiceWorker();
