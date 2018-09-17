@@ -1,5 +1,8 @@
 #sidebar-filter-container {
-    background-color: white;
     margin: 10px;
     padding: 10px;
+}
+
+#sidebar-filter-container > .filter-card{
+    margin: 10px;
 }

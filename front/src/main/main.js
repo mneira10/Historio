@@ -7,20 +7,6 @@ import { Stories } from "../story/story";
 import Banner from "./top_bar";
 
 export class Main extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = {
-      option: 0
-    };
-    this.optionClickHandler = this.optionClickHandler.bind( this );
-  }
-
-  optionClickHandler( opt ) {
-    return () => {
-      this.setState( { option: opt } );
-    };
-  }
-
   redirectTo( path ) {
     return () => this.props.history.push( path );
   }
@@ -42,14 +28,10 @@ export class Main extends React.Component {
               </div>
             </div>
           }/>
-          <Route path="/stories" component={Stories}/>
+          <Route path="/stories" render={( props ) => <Stories {...props}/>}/>
         </Switch>
       </div>
     );
-
-    if ( this.state.option === 1 ) {
-      to_render = <Stories/>;
-    }
 
     return (to_render);
   }

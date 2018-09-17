@@ -6,6 +6,8 @@ import "./resources/styles/filter.css";
 import axios from "axios";
 import { backurl } from "../App";
 import { StoryFilter } from "./story-filter";
+import { Route, Switch } from "react-router-dom/es/";
+import { StoryItem } from "./story-item";
 
 export class Story extends React.Component {
 
@@ -15,14 +17,14 @@ export class Story extends React.Component {
     this.clickHandler = this.clickHandler.bind( this );
   }
 
-  clickHandler() {
-    this.setState( { expanded: !this.state.expanded } );
+  clickHandler( id ) {
+    return () => this.props.history.push( "/stories/" + id.story.id );
   }
 
   render() {
     return (
       <div className="story-item-container in-bottom">
-        <div className="story-item" onClick={this.clickHandler}>
+        <div className="story-item" onClick={this.clickHandler( this.props.item )}>
           <div>
             <div>
               <h3 className="story-title">{this.props.item.story.title}</h3>
@@ -46,19 +48,20 @@ export class Story extends React.Component {
             <div/>
           </div>
         </div>
-        <div className={"story-item-extend " + (this.state.expanded ? "expanded" : "")}>
-          {this.state.expanded && <p>{this.props.item.story.text}</p>}
-        </div>
+        {/*<div className={"story-item-extend " + (this.state.expanded ? "expanded" : "")}>*/}
+        {/*{this.state.expanded && <p>{this.props.item.story.text}</p>}*/}
+        {/*</div>*/}
       </div>
     );
   }
 }
 
 Story.propTypes = {
-  item: Proptypes.object.isRequired
+  item: Proptypes.object.isRequired,
+  history: Proptypes.object.isRequired
 };
 
-export class Stories extends React.Component {
+class StoriesList extends React.Component {
 
   constructor( props ) {
     super( props );
@@ -70,11 +73,10 @@ export class Stories extends React.Component {
   }
 
   componentDidMount() {
-
     let parseData = ( response ) => {
       this.stories = response[ "results" ][ 0 ][ "data" ].map( ( item ) => {
         return {
-          story: item[ "row" ][ 0 ],
+          story: {...item[ "row" ][ 0 ], id: item["row"][3]},
           author: item[ "row" ][ 1 ],
           tags: item[ "row" ][ 2 ]
         };
@@ -118,13 +120,28 @@ export class Stories extends React.Component {
           <div id="stories-container" className="stories-grid overflow-hidden" ref={this.refContainer}>
             {this.stories.map( ( item, index ) => {
               return (
-                <Story key={"story_" + index} item={item}/>
+                <Story key={"story_" + index} item={item} {...this.props}/>
               );
             } )}
           </div>
         </div>
       );
     }
-    return (to_render);
+    return to_render;
   }
 }
+
+export class Stories extends React.Component{
+  render(){
+    return (
+      <Switch>
+        <Route exact path="/stories" component={StoriesList}/>
+        <Route exact path="/stories/:id" component={StoryItem}/>
+      </Switch>
+    );
+  }
+}
+
+Stories.propTypes = {
+  history: Proptypes.object.isRequired
+};
