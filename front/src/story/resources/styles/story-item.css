@@ -1,3 +1,109 @@
-#story-item{
+#story-item {
     background-color: white;
+    height: calc(100% - 50px);
+    margin-top: -22px;
+    padding-top: 20px;
+}
+
+#title,
+#story-item > h1 {
+    text-align: center;
+    font-size: 2em;
+    outline: none;
+    border: 1px solid transparent;
+}
+
+#title > input{
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    border: 1px solid transparent;
+    line-height: 70px;
+}
+
+
+#story-item-content {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+
+    padding: 10px;
+    text-align: justify;
+    line-height: 25px;
+    margin-bottom: 50px;
+    white-space: pre-line;
+}
+
+#story-item-author {
+    margin: 0 auto;
+    text-align: center;
+    position: fixed;
+    right: 15px;
+    width: 20vw;
+}
+
+.badge {
+    background-color: #212121;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 15px;
+    margin: 2px 3px;
+    font-size: 0.9em;
+}
+
+#story-rating > i {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#story-item-author-img {
+    background: url("../imgs/default-user.png") no-repeat right;
+    background-size: contain;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.star-on {
+    color: #f4d142;
+}
+
+#continue-story-btn {
+    font-size: 25px;
+    border: 1px solid transparent;
+    background-color: #beae00 !important;
+    border-radius: 50px;
+    height: 80px;
+    width: 80px;
+    color: white;
+}
+
+#continue-story-btn:hover {
+    background-color: #212121 !important;
+    color: white;
+}
+
+#continue-story-continaer {
+    position: relative;
+    bottom: 0;
+}
+
+.story-text-container {
+    border-radius: 10px;
+    box-shadow: 0 1px 10px -4px;
+    padding: 30px;
+    margin-bottom: 10px;
+}
+
+#stories-back {
+    position: absolute;
+}
+
+textarea.story-text-container {
+    width: calc(100% - 60px);
+    outline: none;
+    border: 1px solid transparent;
 }

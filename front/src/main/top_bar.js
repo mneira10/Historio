@@ -12,12 +12,12 @@ class Banner extends React.Component {
     this.onBlur = this.onBlur.bind( this );
   }
 
-  userOptHandler( ) {
+  userOptHandler() {
     this.userOpt.current.classList.toggle( "show" );
     this.userOpt.current.firstChild.focus();
   }
 
-  onBlur( ) {
+  onBlur() {
     // this.userOpt.current.classList.toggle( "show" );
   }
 
@@ -27,10 +27,14 @@ class Banner extends React.Component {
     this.props.signout();
   }
 
+  goTo( path ) {
+    this.props.history.push( path );
+  }
+
   render() {
     return (
       <div id="banner">
-        <span>Narrar.io</span>
+        <span id="home" onClick={() => this.goTo( "/" )}>Narrar.io</span>
         <div id="user">
           <div className="banner-menu-dropdown">
             <button onClick={this.userOptHandler}><i className="fas fa-user"/></button>

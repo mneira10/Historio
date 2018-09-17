@@ -3,14 +3,19 @@
     height: 30px;
     width: 100%;
     background-color: #212121;
-    position: relative;
     z-index: 10;
+    position: fixed;
+}
+
+#main > #banner+*{
+    margin-top: 35px;
 }
 
 #main > #banner > span {
     font-family: Consolas, monospace;
     font-size: 25px;
     color: white;
+    cursor: pointer;
 }
 
 #main > #banner > #user {

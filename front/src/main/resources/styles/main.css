@@ -7,7 +7,7 @@
 #main button {
     padding: 10px 20px;
     background-color: white;
-    border: 1px solid #212121;
+    border: 1px solid transparent;
     cursor: pointer;
     outline: none;
 }

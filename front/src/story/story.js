@@ -7,7 +7,7 @@ import axios from "axios";
 import { backurl } from "../App";
 import { StoryFilter } from "./story-filter";
 import { Route, Switch } from "react-router-dom/es/";
-import { StoryItem } from "./story-item";
+import StoryItem from "./story-item";
 
 export class Story extends React.Component {
 
@@ -76,7 +76,7 @@ class StoriesList extends React.Component {
     let parseData = ( response ) => {
       this.stories = response[ "results" ][ 0 ][ "data" ].map( ( item ) => {
         return {
-          story: {...item[ "row" ][ 0 ], id: item["row"][3]},
+          story: { ...item[ "row" ][ 0 ], id: item[ "row" ][ 3 ] },
           author: item[ "row" ][ 1 ],
           tags: item[ "row" ][ 2 ]
         };
@@ -102,7 +102,7 @@ class StoriesList extends React.Component {
           let itemList = Array.from( self.refContainer.current
             .getElementsByClassName( "story-item-container" ) );
           doTimeOut( itemList, 0 );
-          setTimeout( () => self.refContainer.current.classList.remove( "overflow-hidden" ), 1500 );
+          setTimeout( () => self.refContainer.current && self.refContainer.current.classList.remove( "overflow-hidden" ), 1500 );
         })( this );
       } );
   }
@@ -116,7 +116,7 @@ class StoriesList extends React.Component {
     if ( !this.state.loading ) {
       to_render = (
         <div id="full-stories-container">
-          <StoryFilter redirigirCrearHistoria = {this.props.redirigirCrearHistoria}/>
+          <StoryFilter redirigirCrearHistoria={this.props.redirigirCrearHistoria}/>
           <div id="stories-container" className="stories-grid overflow-hidden" ref={this.refContainer}>
             {this.stories.map( ( item, index ) => {
               return (
@@ -131,19 +131,23 @@ class StoriesList extends React.Component {
   }
 }
 
-export class Stories extends React.Component{
- 
-  
-  render(){
+StoriesList.propTypes = {
+  redirigirCrearHistoria: Proptypes.func
+};
+
+export class Stories extends React.Component {
+  render() {
     return (
       <Switch>
-        <Route exact path="/stories" component={(props)=><StoriesList {...props} redirigirCrearHistoria={this.props.redirigirCrearHistoria} />}  />
-        <Route exact path="/stories/:id" component={StoryItem}/>
+        <Route exact path="/stories" component={( props ) => <StoriesList {...props}
+          redirigirCrearHistoria={this.props.redirigirCrearHistoria}/>}/>
+        <Route exact path="/stories/:id" component={( props ) => <StoryItem {...props}/>}/>
       </Switch>
     );
   }
 }
 
 Stories.propTypes = {
-  history: Proptypes.object.isRequired
+  history: Proptypes.object.isRequired,
+  redirigirCrearHistoria: Proptypes.func
 };

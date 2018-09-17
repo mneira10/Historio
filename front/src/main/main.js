@@ -4,20 +4,19 @@ import "./resources/styles/main.css";
 import "./resources/styles/main-banner.css";
 import { Route, Switch } from "react-router-dom/es/";
 import { Stories } from "../story/story";
-import {Authors} from "../authors/authors";
-import {CreateStory} from "../createStory/createStory";
+import { Authors } from "../authors/authors";
+import CreateStory from "../createStory/createStory";
 import Banner from "./top_bar";
 
 export class Main extends React.Component {
+
   redirectTo( path ) {
     return () => this.props.history.push( path );
   }
 
   redirigirACrearHistoria() {
-
-    this.redirectTo("/createStory")();
+    this.redirectTo( "/createStory" )();
   }
-
 
   render() {
     let to_render = (
@@ -36,9 +35,10 @@ export class Main extends React.Component {
               </div>
             </div>
           }/>
-          <Route path="/stories" render={( props ) => <Stories {...props} redirigirCrearHistoria={()=>this.redirigirACrearHistoria()}/>}/>
+          <Route path="/stories" render={( props ) => <Stories {...props}
+            redirigirCrearHistoria={() => this.redirigirACrearHistoria()}/>}/>
           <Route path="/authors" component={Authors}/>
-          <Route path="/createStory" component={(props) => <CreateStory {...props}/>}/>
+          <Route path="/createStory" component={( props ) => <CreateStory {...props}/>}/>
         </Switch>
       </div>
     );

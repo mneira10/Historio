@@ -6,8 +6,11 @@ import { Main } from "./main/main";
 import Redirect from "react-router-dom/es/Redirect";
 import { Cookies, withCookies } from "react-cookie";
 import { instanceOf } from "prop-types";
+import axio from "axios";
 
 export const backurl = "http://neo4jbig8575.cloudapp.net:8080";
+
+export let root = undefined;
 
 class App extends React.Component {
   constructor( props ) {
@@ -18,6 +21,15 @@ class App extends React.Component {
 
     this.approvedLogin = this.approvedLogin.bind( this );
     this.signout = this.signout.bind( this );
+
+    this.getRoot();
+  }
+
+  getRoot() {
+    axio.get( backurl + "/story/root" )
+      .then( ( response ) => {
+        root = response.data;
+      } );
   }
 
   approvedLogin() {
