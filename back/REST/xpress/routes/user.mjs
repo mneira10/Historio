@@ -77,11 +77,13 @@ router.post("/authenticate", (req, res) => {
             // console.log(sha1(req.body.pass+docs[0].salt));
             // console.log("Hashed psswd db");
             // console.log(docs[0].hash);
+            // console.log("entraaaaaa");
+            // console.log(docs.length);
             if(docs.length===0){
                 res.status(400);
                 res.send(false);
             }
-            if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
+            else if (sha1(req.body.pass + docs[0].salt) === docs[0].hash) {
                 res.send(true);
             } else {
                 res.status(400);
