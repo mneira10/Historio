@@ -70,7 +70,7 @@ router.get("/root", (req, res) => {
 
 // all stories
 router.get("/", (req, res) => {
-  query("match (s:Story) match(a:Author) match (t:Tag) where (a)-[:Wrote]->(s) and (s)-[:Is]->(t) return s,a,collect(t)", {
+  query("match (s:Story) match(a:Author) match (t:Tag) where (a)-[:Wrote]->(s) and (s)-[:Is]->(t) return s,a,collect(t),id(s)", {
     "": ""
   }, "row", (data) => {
     res.setHeader("Content-Type", "application/json");
