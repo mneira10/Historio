@@ -4,6 +4,7 @@ import "./resources/styles/main.css";
 import "./resources/styles/main-banner.css";
 import { Route, Switch } from "react-router-dom/es/";
 import { Stories } from "../story/story";
+import {Authors} from "../authors/authors";
 import Banner from "./top_bar";
 
 export class Main extends React.Component {
@@ -43,6 +44,7 @@ export class Main extends React.Component {
             </div>
           }/>
           <Route path="/stories" component={Stories}/>
+          <Route path="/authors" component={Authors}/>
         </Switch>
       </div>
     );
