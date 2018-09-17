@@ -60,7 +60,7 @@ router.post('/',(req,res)=>{
 
 // root story
 router.get("/root", (req, res) => {
-    query("match (s:Story) match(a:Author) match (t:Tag) where (a)-[:Wrote]->(s) and (s)-[:Is]->(t) return s,a,t", {
+    query("match (N:Root) return id(N)", {
         "": ""
     }, "row", (data) => {
         res.setHeader('Content-Type', 'application/json');
@@ -70,7 +70,7 @@ router.get("/root", (req, res) => {
 
 // all stories
 router.get("/", (req, res) => {
-    query("match (N:Story) return N", {
+    query("match (s:Story) match(a:Author) match (t:Tag) where (a)-[:Wrote]->(s) and (s)-[:Is]->(t) return s,a,t", {
         "": ""
     }, "row", (data) => {
         res.setHeader('Content-Type', 'application/json');
