@@ -16,6 +16,7 @@ app.use("/story", story);
 app.use("/rating", rating);
 app.use("/user", user);
 
-const port = 8080;
+// Use port as a environment variable. Add a config file
+const port = process.env.PORT;
 
 app.listen(port, () => console.log("Narrario back listening on port " + port + "!"));
