@@ -48,9 +48,7 @@ export class Story extends React.Component {
             <div/>
           </div>
         </div>
-        {/*<div className={"story-item-extend " + (this.state.expanded ? "expanded" : "")}>*/}
-        {/*{this.state.expanded && <p>{this.props.item.story.text}</p>}*/}
-        {/*</div>*/}
+        {/*Delete unused code*/}       
       </div>
     );
   }
