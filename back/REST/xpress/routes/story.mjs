@@ -12,19 +12,6 @@ router.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//create story
-// {
-// 	"padre":257,
-// 	"story":{
-// 		"title":"tercero",
-// 		"text":"blabidi blabidi bla",
-// 		"date": "2017-08-23",
-// 		"modifiability":2
-// 	},
-// 	"author":{"username":"mneira011"},
-// 	"tags":["#academic","#fantasy"]
-// }
-
 router.post("/",(req,res)=>{
   console.log("entra a postear");
   const tags = req.body.tags;
@@ -52,9 +39,6 @@ router.post("/",(req,res)=>{
     res.send("Created story succesfully");
 
   });
-    
-
-
 });
 
 
@@ -126,10 +110,6 @@ router.get("/:id/tags", (req, res) => {
     res.json(data);
   });
 });
-
-// TODO: create story
-
-
 
 export {
   router
